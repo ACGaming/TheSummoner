@@ -36,6 +36,7 @@ repositories {
 
 dependencies {
     deobfCompile "curse.maven:multi-mob-core-309136:2666556"
+    implementation "curse.maven:just-enough-resources-jer-240630:2728586"
 }
 
 processResources {
@@ -44,7 +45,7 @@ processResources {
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
