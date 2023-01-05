@@ -29,6 +29,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.pathfinding.PathNavigateFlying;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -140,7 +142,10 @@ public class ItemSummonerOrb extends Item {
     				MMMessageRegistry.getNetwork().sendToAllAround(new MessageSummonable(summonedEntity.getUniqueID().toString(), summonable.getSummonerId().toString(), summonable.isFollowing() , summonable.getTimeLimit()), 
     						new TargetPoint(player.dimension, summonedEntity.posX, summonedEntity.posY, summonedEntity.posZ, 255D));
     				CapabilitySummonableEntity.EventHandler.updateEntityTargetAI(summonedEntity);
-    				summonedEntity.tasks.addTask(3, new EntityAISummonFollowOwner(summonedEntity, 1.2D, 8.0f, 2.0f));
+					if (summonedEntity.getNavigator() instanceof PathNavigateGround || summonedEntity.getNavigator() instanceof PathNavigateFlying)
+					{
+						summonedEntity.tasks.addTask(3, new EntityAISummonFollowOwner(summonedEntity, 1.2D, 8.0f, 2.0f));
+					}
     			}
     		}
     		summonedEntity.playSound(SoundEvents.EVOCATION_ILLAGER_CAST_SPELL, 1, 1);

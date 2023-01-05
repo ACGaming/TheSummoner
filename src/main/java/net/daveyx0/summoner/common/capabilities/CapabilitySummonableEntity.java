@@ -32,6 +32,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathNavigateFlying;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -217,7 +219,7 @@ public class CapabilitySummonableEntity {
 					entity.tasks.taskEntries.stream().filter(taskEntry -> taskEntry.action instanceof EntityAISummonFollowOwner)
 					.findFirst().ifPresent(taskEntry -> entity.tasks.removeTask(taskEntry.action));
 					
-					if(summonable.isFollowing())
+					if(summonable.isFollowing() && (entity.getNavigator() instanceof PathNavigateGround || entity.getNavigator() instanceof PathNavigateFlying))
 					{
 						entity.tasks.addTask(3, new EntityAISummonFollowOwner(entity, 1.2D, 8.0f, 2.0f));
 					}
@@ -330,7 +332,7 @@ public class CapabilitySummonableEntity {
 							MMMessageRegistry.getNetwork().sendToAllAround(new MessageSummonable(event.getTarget().getUniqueID().toString(), summonable.getSummonerId().toString(), summonable.isFollowing(), summonable.getTimeLimit()), 
 							new TargetPoint(event.getEntityPlayer().dimension, event.getTarget().posX, event.getTarget().posY, event.getTarget().posZ, 255D));
 					
-						if(summonable.isFollowing())
+						if(summonable.isFollowing() && (entity.getNavigator() instanceof PathNavigateGround || entity.getNavigator() instanceof PathNavigateFlying))
 						{
 							updateEntityTargetAI(entity);
 							event.getEntityPlayer().sendMessage(new TextComponentTranslation("%1$s is now following.",new Object[] {event.getTarget().getDisplayName()}));

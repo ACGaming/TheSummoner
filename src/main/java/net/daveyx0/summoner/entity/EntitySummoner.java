@@ -53,6 +53,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigateFlying;
+import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -369,7 +371,10 @@ public class EntitySummoner extends EntitySummoningIllager implements IMultiMob 
     				MMMessageRegistry.getNetwork().sendToAllAround(new MessageSummonable(entity.getUniqueID().toString(), summonable.getSummonerId().toString(), summonable.isFollowing(), summonable.getTimeLimit()), 
     						new TargetPoint(EntitySummoner.this.dimension, entity.posX, entity.posY, entity.posZ, 255D));
     				CapabilitySummonableEntity.EventHandler.updateEntityTargetAI(entity);
-    				entity.tasks.addTask(3, new EntityAISummonFollowOwner(entity, 1.2D, 8.0f, 2.0f));
+                    if (entity.getNavigator() instanceof PathNavigateGround || entity.getNavigator() instanceof PathNavigateFlying)
+                    {
+                        entity.tasks.addTask(3, new EntityAISummonFollowOwner(entity, 1.2D, 8.0f, 2.0f));
+                    }
     			}
                 }
             }

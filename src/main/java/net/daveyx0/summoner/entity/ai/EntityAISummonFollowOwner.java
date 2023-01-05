@@ -1,5 +1,6 @@
 package net.daveyx0.summoner.entity.ai;
 
+import net.daveyx0.multimob.core.MultiMob;
 import net.daveyx0.multimob.util.EntityUtil;
 import net.daveyx0.summoner.common.capabilities.CapabilitySummonableEntity;
 import net.daveyx0.summoner.common.capabilities.ISummonableEntity;
@@ -42,7 +43,7 @@ public class EntityAISummonFollowOwner extends EntityAIBase
 
         if (!(summon.getNavigator() instanceof PathNavigateGround) && !(summon.getNavigator() instanceof PathNavigateFlying))
         {
-            throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
+            MultiMob.LOGGER.error("Unsupported mob for FollowOwnerGoal: " + summon.getName());
         }
     }
 

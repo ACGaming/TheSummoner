@@ -1,17 +1,10 @@
-
 [
-{
-  "modid": "thesummoner",
-  "name": "The Summoner",
-  "description": "A mod that adds a Summoner Illager mob.",
-  "version": "1.0",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["Daveyx0"],
-  "credits": "",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": [mod_minecraftForge]
-}
+  {
+    "modid": "thesummoner",
+    "name": "The Summoner",
+    "description": "A mod that adds a Summoner Illager mob.",
+    "version": "1.0.2-beta",
+    "mcversion": "${mcversion}",
+    "authorList": ["Daveyx0", "ACGaming"]
+  }
 ]
