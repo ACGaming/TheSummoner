@@ -367,7 +367,7 @@ public class EntitySummoner extends EntitySummoningIllager implements IMultiMob
                 entity.moveToBlockPosAndAngles(blockpos, 0.0F, 0.0F);
                 MMMessageRegistry.getNetwork().sendToAll(new MessageMMParticle(EnumParticleTypes.ENCHANTMENT_TABLE.getParticleID(), 50, blockpos.getX() + 0.5f, blockpos.getY() + 0.5F, blockpos.getZ() + 0.5f, 0D, 0.0D, 0.0D, 0));
                 EntitySummoner.this.world.spawnEntity(entity);
-                entity.setCustomNameTag(EntitySummoner.this.getName() + "'s " + entity.getDisplayName());
+                entity.setCustomNameTag(EntitySummoner.this.getName() + "'s " + entity.getDisplayName().getFormattedText());
                 if (EntityUtil.getCapability(entity, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null) != null)
                 {
                     ISummonableEntity summonable = EntityUtil.getCapability(entity, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
