@@ -1,0 +1,10 @@
+#Entities
+entity.thesummoner.summoner.name=Beschwörer
+
+#Items
+item.thesummoner:summoner_orb.name=Orb des Beschwörers
+item.thesummoner:enhanced_summoner_orb.name=Verbesserter Orb des Beschwörers
+
+#Messages
+msg.thesummoner.entity.following=%1$s folgt nun.
+msg.thesummoner.entity.sitting=%1$s sitzt nun.
