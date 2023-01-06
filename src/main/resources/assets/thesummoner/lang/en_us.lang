@@ -8,3 +8,10 @@ item.thesummoner:enhanced_summoner_orb.name=Enhanced Summoner Orb
 #Messages
 msg.thesummoner.entity.following=%1$s is now following.
 msg.thesummoner.entity.sitting=%1$s is now sitting.
+msg.thesummoner.entity.captured=Spirit captured
+msg.thesummoner.entity.returned=Spirit returned
+
+#Tooltips
+tooltip.thesummoner:summoner_orb.empty=Empty
+tooltip.thesummoner:summoner_orb.durability=Increased durability
+tooltip.thesummoner:summoner_orb.time_limit=No summon time limit

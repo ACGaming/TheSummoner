@@ -8,3 +8,10 @@ item.thesummoner:enhanced_summoner_orb.name=Verbesserter Orb des Beschwörers
 #Messages
 msg.thesummoner.entity.following=%1$s folgt nun.
 msg.thesummoner.entity.sitting=%1$s sitzt nun.
+msg.thesummoner.entity.captured=Seele eingefangen
+msg.thesummoner.entity.returned=Seele zurückgekehrt
+
+#Tooltips
+tooltip.thesummoner:summoner_orb.empty=Leer
+tooltip.thesummoner:summoner_orb.durability=Erhöhte Haltbarkeit
+tooltip.thesummoner:summoner_orb.time_limit=Kein Zeitlimit für Beschwörungen

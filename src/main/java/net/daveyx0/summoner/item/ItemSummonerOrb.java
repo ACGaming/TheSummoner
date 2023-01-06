@@ -21,6 +21,7 @@ import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -97,7 +98,6 @@ public class ItemSummonerOrb extends Item
         }
         else
         {
-
             if (EntityRegistry.getEntry(entity.getClass()) != null)
             {
                 NBTTagCompound nbttagcompound = entity.writeToNBT(new NBTTagCompound());
@@ -136,18 +136,16 @@ public class ItemSummonerOrb extends Item
                 String message;
                 if (name.contains("'s "))
                 {
-                    //MultiMob.gotHere();
                     String[] names = name.split("'s ");
                     name = names[1];
-                    message = "Spirit Returned: " + name;
+                    message = new TextComponentTranslation("msg.thesummoner.entity.returned").getFormattedText() + ": " + name;
                 }
                 else
                 {
-                    message = "Spirit Captured: " + name;
+                    message = new TextComponentTranslation("msg.thesummoner.entity.captured").getFormattedText() + ": " + name;
                 }
 
                 nbttagcompound.setString("EntityName", name);
-
 
                 if (!player.getEntityWorld().isRemote)
                 {
@@ -345,8 +343,8 @@ public class ItemSummonerOrb extends Item
     {
         if (this.type == 1)
         {
-            tooltip.add("§1Increased Durability");
-            tooltip.add("§1No Summon Time Limit");
+            tooltip.add("- " + new TextComponentTranslation("tooltip.thesummoner:summoner_orb.durability").getFormattedText());
+            tooltip.add("- " + new TextComponentTranslation("tooltip.thesummoner:summoner_orb.time_limit").getFormattedText());
         }
 
         NBTTagCompound nbttagcompound = stack.getTagCompound();
@@ -361,12 +359,12 @@ public class ItemSummonerOrb extends Item
             }
             else
             {
-                tooltip.add("empty");
+                tooltip.add(new TextComponentTranslation("tooltip.thesummoner:summoner_orb.empty").getFormattedText());
             }
         }
         else
         {
-            tooltip.add("empty");
+            tooltip.add(new TextComponentTranslation("tooltip.thesummoner:summoner_orb.empty").getFormattedText());
         }
     }
 
