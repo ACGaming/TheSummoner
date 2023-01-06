@@ -1,9 +1,5 @@
 package net.daveyx0.summoner.entity.ai;
 
-import net.daveyx0.multimob.core.MultiMob;
-import net.daveyx0.multimob.util.EntityUtil;
-import net.daveyx0.summoner.common.capabilities.CapabilitySummonableEntity;
-import net.daveyx0.summoner.common.capabilities.ISummonableEntity;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
@@ -19,16 +15,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import net.daveyx0.multimob.core.MultiMob;
+import net.daveyx0.multimob.util.EntityUtil;
+import net.daveyx0.summoner.common.capabilities.CapabilitySummonableEntity;
+import net.daveyx0.summoner.common.capabilities.ISummonableEntity;
+
 public class EntityAISummonFollowOwner extends EntityAIBase
 {
     private final EntityLiving summon;
-    private EntityLivingBase owner;
-    World world;
     private final double followSpeed;
     private final PathNavigate petPathfinder;
-    private int timeToRecalcPath;
+    World world;
     float maxDist;
     float minDist;
+    private EntityLivingBase owner;
+    private int timeToRecalcPath;
     private float oldWaterCost;
 
     public EntityAISummonFollowOwner(EntityLiving summon, double followSpeedIn, float minDistIn, float maxDistIn)
@@ -52,32 +53,32 @@ public class EntityAISummonFollowOwner extends EntityAIBase
      */
     public boolean shouldExecute()
     {
-        if(this.summon != null && this.summon.hasCapability(CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null))
+        if (this.summon != null && this.summon.hasCapability(CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null))
         {
-        	ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
-        	EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
-        	
-        	if (entitylivingbase == null)
-        	{
-        		return false;
-        	}
-        	else if (summon.getAttackTarget() != null)
-        	{
-        		return false;
-        	}
-        	else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).isSpectator())
-        	{
-        		return false;
-        	}
-        	else if (this.summon.getDistanceSq(entitylivingbase) < (double)(this.minDist * this.minDist))
-        	{
-            	return false;
-        	}
-        	else
-        	{
-            	this.owner = entitylivingbase;
-            	return true;
-        	}
+            ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
+            EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
+
+            if (entitylivingbase == null)
+            {
+                return false;
+            }
+            else if (summon.getAttackTarget() != null)
+            {
+                return false;
+            }
+            else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer) entitylivingbase).isSpectator())
+            {
+                return false;
+            }
+            else if (this.summon.getDistanceSq(entitylivingbase) < (double) (this.minDist * this.minDist))
+            {
+                return false;
+            }
+            else
+            {
+                this.owner = entitylivingbase;
+                return true;
+            }
         }
         return false;
     }
@@ -87,7 +88,7 @@ public class EntityAISummonFollowOwner extends EntityAIBase
      */
     public boolean shouldContinueExecuting()
     {
-        return !this.petPathfinder.noPath() && this.summon.getDistanceSq(this.owner) > (double)(this.maxDist * this.maxDist);
+        return !this.petPathfinder.noPath() && this.summon.getDistanceSq(this.owner) > (double) (this.maxDist * this.maxDist);
     }
 
     /**
@@ -115,38 +116,37 @@ public class EntityAISummonFollowOwner extends EntityAIBase
      */
     public void updateTask()
     {
-        this.summon.getLookHelper().setLookPositionWithEntity(this.owner, 10.0F, (float)this.summon.getVerticalFaceSpeed());
+        this.summon.getLookHelper().setLookPositionWithEntity(this.owner, 10.0F, (float) this.summon.getVerticalFaceSpeed());
 
-            if (--this.timeToRecalcPath <= 0)
+        if (--this.timeToRecalcPath <= 0)
+        {
+            this.timeToRecalcPath = 10;
+
+            if (!this.petPathfinder.tryMoveToEntityLiving(this.owner, this.followSpeed))
             {
-                this.timeToRecalcPath = 10;
-
-                if (!this.petPathfinder.tryMoveToEntityLiving(this.owner, this.followSpeed))
+                if (!this.summon.getLeashed() && !this.summon.isRiding())
                 {
-                    if (!this.summon.getLeashed() && !this.summon.isRiding())
+                    if (this.summon.getDistanceSq(this.owner) >= 144.0D && this.summon.getAttackTarget() == null)
                     {
-                        if (this.summon.getDistanceSq(this.owner) >= 144.0D && this.summon.getAttackTarget() == null)
-                        {
-                            int i = MathHelper.floor(this.owner.posX) - 2;
-                            int j = MathHelper.floor(this.owner.posZ) - 2;
-                            int k = MathHelper.floor(this.owner.getEntityBoundingBox().minY);
+                        int i = MathHelper.floor(this.owner.posX) - 2;
+                        int j = MathHelper.floor(this.owner.posZ) - 2;
+                        int k = MathHelper.floor(this.owner.getEntityBoundingBox().minY);
 
-                            for (int l = 0; l <= 4; ++l)
+                        for (int l = 0; l <= 4; ++l)
+                        {
+                            for (int i1 = 0; i1 <= 4; ++i1)
                             {
-                                for (int i1 = 0; i1 <= 4; ++i1)
+                                if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && this.isTeleportFriendlyBlock(i, j, k, l, i1))
                                 {
-                                    if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && this.isTeleportFriendlyBlock(i, j, k, l, i1))
-                                    {
-                                        this.summon.setLocationAndAngles((double)((float)(i + l) + 0.5F), (double)k, (double)((float)(j + i1) + 0.5F), this.summon.rotationYaw, this.summon.rotationPitch);
-                                        this.petPathfinder.clearPath();
-                                        return;
-                                    }
+                                    this.summon.setLocationAndAngles((float) (i + l) + 0.5F, k, (float) (j + i1) + 0.5F, this.summon.rotationYaw, this.summon.rotationPitch);
+                                    this.petPathfinder.clearPath();
+                                    return;
                                 }
                             }
                         }
                     }
                 }
-            
+            }
         }
     }
 

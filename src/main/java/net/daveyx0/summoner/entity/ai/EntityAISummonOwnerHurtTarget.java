@@ -1,15 +1,16 @@
 package net.daveyx0.summoner.entity.ai;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+
 import net.daveyx0.multimob.entity.ai.EntityAICustomTarget;
 import net.daveyx0.multimob.util.EntityUtil;
 import net.daveyx0.summoner.common.capabilities.CapabilitySummonableEntity;
 import net.daveyx0.summoner.common.capabilities.ISummonableEntity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 
 public class EntityAISummonOwnerHurtTarget extends EntityAICustomTarget
 {
-	EntityLiving summon;
+    EntityLiving summon;
     EntityLivingBase attacker;
     private int timestamp;
 
@@ -31,16 +32,16 @@ public class EntityAISummonOwnerHurtTarget extends EntityAICustomTarget
         }
         else
         {
-        	ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
-        	EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
+            ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
+            EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
 
             if (entitylivingbase == null)
             {
                 return false;
             }
-            else if((entitylivingbase instanceof EntityLiving) && ((EntityLiving)entitylivingbase).getAttackTarget() != null)
+            else if ((entitylivingbase instanceof EntityLiving) && ((EntityLiving) entitylivingbase).getAttackTarget() != null)
             {
-                this.attacker = ((EntityLiving)entitylivingbase).getAttackTarget();
+                this.attacker = ((EntityLiving) entitylivingbase).getAttackTarget();
                 return this.isSuitableTarget(this.attacker, false);
             }
             else
@@ -48,7 +49,7 @@ public class EntityAISummonOwnerHurtTarget extends EntityAICustomTarget
                 this.attacker = entitylivingbase.getLastAttackedEntity();
                 int i = entitylivingbase.getLastAttackedEntityTime();
                 return i != this.timestamp && this.isSuitableTarget(this.attacker, false);
-           }
+            }
         }
     }
 
@@ -59,7 +60,7 @@ public class EntityAISummonOwnerHurtTarget extends EntityAICustomTarget
     {
         this.taskOwner.setAttackTarget(this.attacker);
         ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
-    	EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
+        EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
 
         if (entitylivingbase != null)
         {

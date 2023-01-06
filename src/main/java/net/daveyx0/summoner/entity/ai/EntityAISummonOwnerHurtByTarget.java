@@ -1,11 +1,12 @@
 package net.daveyx0.summoner.entity.ai;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+
 import net.daveyx0.multimob.entity.ai.EntityAICustomTarget;
 import net.daveyx0.multimob.util.EntityUtil;
 import net.daveyx0.summoner.common.capabilities.CapabilitySummonableEntity;
 import net.daveyx0.summoner.common.capabilities.ISummonableEntity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 
 public class EntityAISummonOwnerHurtByTarget extends EntityAICustomTarget
 {
@@ -31,8 +32,8 @@ public class EntityAISummonOwnerHurtByTarget extends EntityAICustomTarget
         }
         else
         {
-        	ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
-        	EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
+            ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
+            EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
 
             if (entitylivingbase == null)
             {
@@ -54,7 +55,7 @@ public class EntityAISummonOwnerHurtByTarget extends EntityAICustomTarget
     {
         this.taskOwner.setAttackTarget(this.attacker);
         ISummonableEntity summonable = EntityUtil.getCapability(summon, CapabilitySummonableEntity.SUMMONABLE_ENTITY_CAPABILITY, null);
-    	EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
+        EntityLivingBase entitylivingbase = summonable.getSummoner(summon);
 
         if (entitylivingbase != null)
         {

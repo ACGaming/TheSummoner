@@ -1,8 +1,10 @@
 #Entities
-
 entity.thesummoner.summoner.name=Summoner
 
 #Items
-
 item.thesummoner:summoner_orb.name=Summoner Orb
 item.thesummoner:enhanced_summoner_orb.name=Enhanced Summoner Orb
+
+#Messages
+msg.thesummoner.entity.following=%1$s is now following.
+msg.thesummoner.entity.sitting=%1$s is now sitting.

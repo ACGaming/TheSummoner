@@ -3,7 +3,7 @@
     "modid": "thesummoner",
     "name": "The Summoner",
     "description": "A mod that adds a Summoner Illager mob.",
-    "version": "1.0.2-beta",
+    "version": "1.1.0-beta",
     "mcversion": "${mcversion}",
     "authorList": ["Daveyx0", "ACGaming"]
   }
