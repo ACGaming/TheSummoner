@@ -319,14 +319,20 @@ public class CapabilitySummonableEntity
                         if (summonable.isFollowing() && (entity.getNavigator() instanceof PathNavigateGround || entity.getNavigator() instanceof PathNavigateFlying))
                         {
                             updateEntityTargetAI(entity);
-                            event.getEntityPlayer().sendMessage(new TextComponentTranslation("msg.thesummoner.entity.following", event.getTarget().getDisplayName()));
                             entity.tasks.addTask(3, new EntityAISummonFollowOwner(entity, 1.2D, 8.0f, 2.0f));
+                            if (event.getEntityPlayer().getEntityWorld().isRemote)
+                            {
+                                event.getEntityPlayer().sendMessage(new TextComponentTranslation("msg.thesummoner.entity.following", event.getTarget().getDisplayName()));
+                            }
                         }
                         else
                         {
                             resetEntityTargetAI(entity);
                             entity.tasks.taskEntries.stream().filter(taskEntry -> taskEntry.action instanceof EntityAISummonFollowOwner).findFirst().ifPresent(taskEntry -> entity.tasks.removeTask(taskEntry.action));
-                            event.getEntityPlayer().sendMessage(new TextComponentTranslation("msg.thesummoner.entity.sitting", event.getTarget().getDisplayName()));
+                            if (event.getEntityPlayer().getEntityWorld().isRemote)
+                            {
+                                event.getEntityPlayer().sendMessage(new TextComponentTranslation("msg.thesummoner.entity.sitting", event.getTarget().getDisplayName()));
+                            }
                         }
                     }
                     else if (entity.canBeSteered())
